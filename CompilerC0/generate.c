@@ -36,7 +36,7 @@ void init_global_memory();
 void branch_act(int i,char *order);
 
 void mips_gene(){
-    //函数形参只在move中出现
+    //潞炉脢媒脨脦虏脦脰禄脭脷move脰脨鲁枚脧脰
     if(errs>0) return;
     fp_code = fopen("code.txt","w");
     mips_data_seg();
@@ -611,13 +611,8 @@ void mips_gene(){
                     else store_global_var_to(tmp_reg[0],A0);
                     tmp_reg[0] = 0;
                 }
-                int rs = get_reg(code4[i].x);
-                if(rs<0){
-                    rs = tmp_reg_apply(code4[i].x);
-                }
                 fprintf(fp_code,"li $v0,%d\n",12);
                 fprintf(fp_code,"syscall\n");
-                fprintf(fp_code,"move $v0,$%s\n",regname(rs));
                 break;
             }
             case SYS_READINT:{
@@ -626,13 +621,8 @@ void mips_gene(){
                     else store_global_var_to(tmp_reg[0],A0);
                     tmp_reg[0] = 0;
                 }
-                int rs = get_reg(code4[i].x);
-                if(rs<0){
-                    rs = tmp_reg_apply(code4[i].x);
-                }
                 fprintf(fp_code,"li $v0,%d\n",5);
                 fprintf(fp_code,"syscall\n");
-                fprintf(fp_code,"move $v0,$%s\n",regname(rs));
                 break;
             }
         }
