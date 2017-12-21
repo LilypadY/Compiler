@@ -3,17 +3,12 @@
 #include"memory.h"
 #include"table.h"
 int c4p = 1;//0 for j main
-int tsp = 0;
 
 int tmp_var_cont = 0;
 int label_cont = 0;
 int labels[LBMAX];
 int strlp = 0;
 
-
-void clear_tmp_stack(){
-    tsp = 0;
-}
 
 int emit3(int f,int x,int y,int z,int flag_x,int flag_y){
     if(errs>0) return 0;

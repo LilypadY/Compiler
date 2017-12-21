@@ -1,101 +1,13 @@
 
-const int RES_LIST_LEN=10,RES_WD_LEN=10;
-const int RES_ZONE_END =35,RES_ZONE_ST =0;
-const int ERROR_LEX = -404;
-const char COLON = '0';
-const int SPT_ZONE_END = 10,SPT_ZONE_ST=5;
-
-int pt;
-char token[10];
-char string1[10],string2[10],string3[10];
-char sptlist[10];
-int strcmp12(){
-	int i;
-	i = 0;
-	do{
-		if(string1[i]!=string2[i]){
-			return (string1[i]-string2[i]);
+int switchcodintion(){
+    int i, rightnumber;
+    rightnumber = 1;
+    if (rightnumber){
+	printf("rightnumber = ",rightnumber);
+        return (i);
 		}
-		i=i+1;
-	}while(i<10)
-	return (0);
+    printf("switchcodintion clause  error!");
 }
-int strcmp23(){
-	int i;
-	i = 0;
-	do{
-		if(string3[i]!=string2[i]){
-			return (string2[i]-string3[i]);
-		}
-		i=i+1;
-	}while(i<10);
-	return (0);
-}
-
-int invalid_string(int s){
-	if(s>3) return (1);
-	if(s<=0) return (1);
-	return (0);
-}
-
-int abs(int x){
-	if(x>=0) return (x);
-	return (-x);
-}
-
-int strcmp(int s1,int s2){
-int tmp;
-	if(invalid_string(s1)) return (-1);
-	if(invalid_string(s2)) return (-1);
-	
-	if(s1==s2)
-		return (0);
-	if(s1>s2){
-		tmp = s2;
-		s2 = s1;
-		s1 = tmp;
-	}
-	switch(s1){
-		case 1: {
-			if(s2!=2) return (-1);
-			return (abs(strcmp12()));
-		}
-		case 2: {
-			if(s2!=3) return (-1);
-			return (abs(strcmp23()));
-		}
-	}
-	return (-1);
-}
-char move(int k){
-	if(k>100) return ('a');
-	if(k==2) return ('2');
-	if(k==0) return ('0'); 
-	if(k<0){
-		return (move(-k*2));
-	}
-	if(k>0){
-		return (move(-k+1));
-	}
-}
-
 void main(){
-	int a,n;
-	int s1,s2;
-	int cmp_res;
-	int fi_x;
-	int i;
-	
-	char ch;
-	char c,b;
-	c = 'a';
-	b = 'b';
-	printf((c+b)*3+10);
-	
-	printf("move,input 'n:");
-	printf("");
-	scanf(a);
-	ch = move(a);
-	printf(ch);
-	
+	switchcodintion();
 }

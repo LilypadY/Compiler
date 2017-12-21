@@ -8,7 +8,7 @@
 
 int main()
 {
-    debug = 0;
+    debug = 1;
     char filename[MAXPATH]="test.txt";
     printf("please input full path of file\n");
     if(!debug) scanf("%s",filename);

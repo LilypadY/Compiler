@@ -1,5 +1,18 @@
 # depslib dependency file v1.0
-1512384717 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\lexical.c
+1512608790 source:c:\users\yyx\documents\github\compiler\compilerc0\error.c
+	<stdio.h>
+	"err.h"
+	"lex.h"
+
+1512610333 c:\users\yyx\documents\github\compiler\compilerc0\err.h
+	"compile.h"
+
+1512802500 c:\users\yyx\documents\github\compiler\compilerc0\compile.h
+
+1512554791 c:\users\yyx\documents\github\compiler\compilerc0\lex.h
+	"compile.h"
+
+1512384717 source:c:\users\yyx\documents\github\compiler\compilerc0\lexical.c
 	<stdio.h>
 	<string.h>
 	<ctype.h>
@@ -7,64 +20,24 @@
 	"lex.h"
 	"err.h"
 
-1512802500 c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\compile.h
-
-1513356388 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\main.c
+1513526410 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"compile.h"
 
-1512554791 c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\lex.h
-	"compile.h"
-
-1512608790 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\error.c
+1513645417 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
 	<stdio.h>
 	"err.h"
-	"lex.h"
+	"memory.h"
+	"table.h"
 
-1511880821 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\syntax.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"lex.h"
-	"err.h"
+1513835622 c:\users\yyx\documents\github\compiler\compilerc0\memory.h
 
-1511399690 source:c:\users\admin\desktop\compilerc0\compilerc0\error.c
-	<stdio.h>
-	"compile.h"
+1513834878 c:\users\yyx\documents\github\compiler\compilerc0\table.h
 
-1511426075 c:\users\admin\desktop\compilerc0\compilerc0\compile.h
-
-1511438684 source:c:\users\admin\desktop\compilerc0\compilerc0\lexical.c
-	<stdio.h>
-	<string.h>
-	<ctype.h>
-	<stdlib.h>
-	"compile.h"
-	"lex.h"
-
-1511252963 c:\users\admin\desktop\compilerc0\compilerc0\lex.h
-
-1511438692 source:c:\users\admin\desktop\compilerc0\compilerc0\syntax.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"compile.h"
-
-1511434902 source:c:\users\admin\desktop\compilerc0\compilerc0\main.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<ctype.h>
-	"compile.h"
-	"lex.h"
-
-1512610333 c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\err.h
-	"compile.h"
-
-1513524679 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\senmatic.c
+1513834907 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -73,24 +46,14 @@
 	"table.h"
 	"memory.h"
 
-1513512875 c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\table.h
-
-1512837301 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\table.c
+1512837301 source:c:\users\yyx\documents\github\compiler\compilerc0\table.c
 	<stdio.h>
 	<string.h>
 	"err.h"
 	"table.h"
 	"lex.h"
 
-1513471251 c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\memory.h
-
-1512899493 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\memory.c
-	<stdio.h>
-	"err.h"
-	"memory.h"
-	"table.h"
-
-1513519895 source:c:\users\yyx\desktop\compilertechnology\compilerc0\compilerc0\generate.c
+1513786706 source:c:\users\yyx\documents\github\compiler\compilerc0\generate.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

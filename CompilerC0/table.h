@@ -14,8 +14,8 @@
 #define TP_NO 2
 
 #define AMAX (20)
-#define TMAX (500)
-#define BMAX (20)
+#define TMAX (1000)
+#define BMAX (100)
 
 
 struct symbol_table{

@@ -2,64 +2,56 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="err.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="table.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1768" topLine="40" />
+			<Cursor1 position="913" topLine="28" />
 		</Cursor>
 	</File>
-	<File name="generate.c" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="memory.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="21871" topLine="524" />
+			<Cursor1 position="3966" topLine="137" />
 		</Cursor>
 	</File>
-	<File name="lexical.c" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="senmatic.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="409" topLine="1" />
+			<Cursor1 position="28879" topLine="1005" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="506" topLine="7" />
+			<Cursor1 position="844" topLine="23" />
 		</Cursor>
 	</File>
-	<File name="table.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="table.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="970" topLine="23" />
+			<Cursor1 position="818" topLine="19" />
 		</Cursor>
 	</File>
-	<File name="memory.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="generate.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="376" topLine="10" />
+			<Cursor1 position="7281" topLine="112" />
 		</Cursor>
+		<Folding>
+			<Collapse line="96" />
+			<Collapse line="115" />
+			<Collapse line="135" />
+			<Collapse line="152" />
+			<Collapse line="155" />
+			<Collapse line="158" />
+			<Collapse line="205" />
+			<Collapse line="217" />
+			<Collapse line="230" />
+			<Collapse line="244" />
+			<Collapse line="256" />
+			<Collapse line="269" />
+			<Collapse line="282" />
+			<Collapse line="289" />
+			<Collapse line="295" />
+		</Folding>
 	</File>
 	<File name="memory.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="968" topLine="49" />
-		</Cursor>
-	</File>
-	<File name="table.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2669" topLine="94" />
-		</Cursor>
-	</File>
-	<File name="senmatic.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="23065" topLine="800" />
-		</Cursor>
-	</File>
-	<File name="compile.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="284" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="error.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="853" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lex.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1820" topLine="41" />
+			<Cursor1 position="252" topLine="11" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

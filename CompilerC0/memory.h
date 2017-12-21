@@ -1,10 +1,10 @@
 #ifndef MEMORY_H_INCLUDED
 #define MEMORY_H_INCLUDED
 #define MAXREG 22
-#define MAXTMPSTK 20
+#define MAXTMPSTK 200
 #define CMAX 10000
-#define LBMAX 100
-#define STRMAX 20
+#define LBMAX 10000
+#define STRMAX 2000
 
 #define	ADD 	0
 #define	SUB	    1
@@ -45,12 +45,6 @@ struct order4{
     int f;
     int x,y,z;
     int flag_x,flag_y,flag_z;//flag==1 for var,2 for label(-1 for global tmp_register),flag==0 for value,
-};
-
-struct loopblk{
-    int head;
-    int tail;
-    struct loopblk *next;
 };
 
 struct order4 code4[CMAX];

@@ -11,8 +11,6 @@ int ischar(int c){
     return 0;
 }
 
-struct loopblk* head,*tail;
-
 int* expression();
 void statement();
 void statements();
@@ -559,7 +557,7 @@ void func_call(int tabidx){
             return;
         }
         k ++;
-        if(tab[base+k].type==TP_CHAR && value!=NULL&& !ischar(*value)){
+        if(tab[base+k].type==TP_CHAR && exp_type==0){
             error(SMT_ERR,TYPEMISMATCH);
             skipline();
             return;
@@ -600,7 +598,8 @@ void condition(int pos_branch){
     flag1 = (value==NULL)?F_VAR:F_VAL;
     if(symbol==RPARSY) {
         e1 = (value==NULL)?GLV:(*value);
-        emit3(BNE,e1,0,-1, flag1,F_VAL);
+        if(pos_branch) emit3(BNE,e1,0,-1, flag1,F_VAL);
+        else emit3(BEQ,e1,0,-1, flag1,F_VAL);
         return;
     }
     if(value!=NULL){
@@ -1056,14 +1055,19 @@ void assign_statement(char name[]){
     }
     else{
         int tv;
-        if(tab[tabidx].tmp_var){
-            tv = tab[tabidx].tmp_var;
+        if(tab[tabidx].kind==VAR){
+            if(tab[tabidx].tmp_var){
+                tv = tab[tabidx].tmp_var;
+            }
+            else{
+                tv = apply_t();
+                tab[tabidx].tmp_var = tv;
+            }
+            emit2(MOVE,valv,tv, valfv,F_VAR);
         }
-        else{
-            tv = apply_t();
-            tab[tabidx].tmp_var = tv;
+        else if(tab[tabidx].kind==PARAM){
+            emit2(MOVE,valv,tab[tabidx].addr, valfv,F_PARAM);
         }
-        emit2(MOVE,valv,tv, valfv,F_VAR);
     }
     if(symbol!=SMCLSY){
         error(STX_ERR,SMCLERR);
@@ -1074,11 +1078,6 @@ void assign_statement(char name[]){
 void while_statement(){
     //int err_recs = errs;
     symbol=nextsym();
-    tail->next=(struct loopblk*)malloc(sizeof(struct loopblk));
-    tail=tail->next;
-    tail->next=NULL;
-    tail->head=c4p;
-    struct loopblk *p = tail;
     int label = apply_label();
     statement();
     if(skipblk_flag){
@@ -1102,7 +1101,6 @@ void while_statement(){
         error(STX_ERR,LPERR);
     }
     fill_Border(label);
-    p->tail=c4p;
     symbol=nextsym();
     if(debug) fprintf(fw,"This is a while statement\n");
 }
@@ -1214,9 +1212,7 @@ void func(int func_type,char name[]){
             error(SMT_ERR,NORET);
         }
     }
-    else{
-        emit0(RET0);
-    }
+    if(code4[c4p-1].f!=RET) emit0(RET0);
     if(symbol!=RBRCSY) error(STX_ERR,RBRCERR);
     symbol = nextsym();
     btab[bp].vd = tmp_var_cont;
@@ -1253,7 +1249,6 @@ void func_main(){
 void program(){
     //int err_recs = errs;
     init_tab();
-    init_loop();
     int type=0;//type of function or variable
     char name[MAX_ID];
 
@@ -1325,7 +1320,3 @@ void program(){
     output_code4();
 }
 
-void init_loop(){
-    head = tail = (struct loopblk*)malloc(sizeof(struct loopblk));
-    tail->next=NULL;
-}
