@@ -763,7 +763,7 @@ void switch_statement(){
                 continue;
             }
             for(i = 0;i < cs_cont; i ++){
-                    if(cslist[i]==intsy_value){
+                    if(cslist[i]==value){
                         error(SMT_ERR,REPCASEERR);
                         skippart(CASESY);
                         break;
