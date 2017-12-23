@@ -5,6 +5,7 @@
 #include"err.h"
 #include"table.h"
 #include"memory.h"
+#define CALLMAX 200
 
 int ischar(int c){
     if(c=='+'||c=='-'||c=='*'||c=='/'||c=='_'||(c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')) return 1;
@@ -543,6 +544,7 @@ int* expression(){
 void func_call(int tabidx){
     //int err_recs = errs;
     //symbol==(
+    struct order4 pushlist[CALLMAX];
     int base = btab[tab[tabidx].refb].head;
     int ps = btab[tab[tabidx].refb].params;
     int k = 0;
@@ -564,11 +566,15 @@ void func_call(int tabidx){
         }
         else{
             if(value!=NULL){
-                emit2(PUSH,*value,k,F_VAL,F_VAL);
+                pushlist[k-1].x = *value;
+                pushlist[k-1].flag_x = F_VAL;
                 free(value);
             }
             else{
-                emit2(PUSH,GLV,k,F_VAR,F_VAL);
+                int pr = apply_t();
+                emit2(MOVE,GLV,pr, F_VAR,F_VAR);
+                pushlist[k-1].x = pr;
+                pushlist[k-1].flag_x = F_VAR;
             }
         }
         if(k>ps||(k==ps&&symbol==COMMASY)){
@@ -584,6 +590,9 @@ void func_call(int tabidx){
         error(STX_ERR,RPERR);
     }
     symbol = nextsym();
+    for(k = 0;k < ps;k ++){
+        emit2(PUSH,pushlist[k].x, k, pushlist[k].flag_x,F_VAL);
+    }
     emit1(CALL,tab[tabidx].refb,F_FUNC);
     if(debug)  fprintf(fw,"This is a function_call statement\n");
 }

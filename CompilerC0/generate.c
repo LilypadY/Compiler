@@ -225,7 +225,7 @@ void mips_gene(){
                 else if(code4[i].flag_x==F_PARAM){
                     load_param_to(code4[i].x,RS);
                 }
-                fprintf(fp_code,"sw $%d,%d($sp)\n",RS,code4[i].z*4);
+                fprintf(fp_code,"sw $%d,%d($sp)\n",RS,(code4[i].z+1)*4);
                 break;
             }
             case RET:{
@@ -334,7 +334,10 @@ void recover_reg_context(){
     if(func_idx<=bp) fprintf(fp_code,"lw $ra,0($fp)\n");
 }
 void load_local_var_to(int var,int reg){
-    fprintf(fp_code,"lw $%d,%d($sp)\n",reg,(var-btab[func_idx].vd)*4);
+    int asize = arrsize(func_idx);
+    int psize = btab[func_idx].params;
+    int s = asize+psize+1;
+    fprintf(fp_code,"lw $%d,%d($fp)\n",reg,(var-1+s)*4);
 }
 void load_glob_wd_to(int var,int reg){
     fprintf(fp_code,"lw $%d,%d($gp)\n",reg,(-var-1+gl_arrs)*4);
@@ -343,7 +346,10 @@ void store_global_var_to(int var,int reg){
     fprintf(fp_code,"sw $%d,%d($gp)\n",reg,(-var-1+gl_arrs)*4);
 }
 void store_local_var_to(int var,int reg){
-    fprintf(fp_code,"sw $%d,%d($sp)\n",reg,(var-btab[func_idx].vd)*4);
+    int asize = arrsize(func_idx);
+    int psize = btab[func_idx].params;
+    int s = asize+psize+1;
+    fprintf(fp_code,"sw $%d,%d($fp)\n",reg,(var-1+s)*4);
 }
 void load_param_to(int var,int reg){
     fprintf(fp_code,"lw $%d,%d($fp)\n",reg,(var+1)*4);
