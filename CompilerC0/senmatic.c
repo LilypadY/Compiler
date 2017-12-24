@@ -503,6 +503,9 @@ int* expression(){
     else{
         res = apply_t();
         emit2(MOVE,GLV,res, F_VAR,F_VAR);
+        if(headsign<0){
+            emit3(SUB,0,res,res, F_VAL,F_VAR);
+        }
     }
     while(symbol==PLUSSY||symbol==MINUSSY){
         if(exp_type==1) exp_type = 0;

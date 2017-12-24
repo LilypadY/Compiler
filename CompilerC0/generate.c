@@ -117,7 +117,7 @@ void mips_gene(){
                 if(code4[i].flag_x==F_VAL&&code4[i].flag_y==F_VAR){
                     load_var_to(code4[i].y,RT);
                     fprintf(fp_code,"li $%d,%d\n",RS,code4[i].x);
-                    fprintf(fp_code,"div $%d,$%d,$%d\n",RD,RD,RS);
+                    fprintf(fp_code,"div $%d,$%d,$%d\n",RD,RS,RT);
                 }
                 else if(code4[i].flag_y==F_VAL&&code4[i].flag_x==F_VAR){
                     load_var_to(code4[i].x,RS);

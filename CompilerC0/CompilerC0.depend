@@ -37,7 +37,7 @@
 
 1513868663 c:\users\yyx\documents\github\compiler\compilerc0\table.h
 
-1514049398 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
+1514119004 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -53,7 +53,7 @@
 	"table.h"
 	"lex.h"
 
-1514098197 source:c:\users\yyx\documents\github\compiler\compilerc0\generate.c
+1514124273 source:c:\users\yyx\documents\github\compiler\compilerc0\generate.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
