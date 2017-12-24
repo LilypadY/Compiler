@@ -100,9 +100,11 @@ void init_tab(){//global block
 }
 void global_var_arr(){
     int i,cont = 1;
+    btab[0].vd = 1;
     for(i = 0;tab[i].kind != FUNC;i ++){
         if(tab[i].kind==VAR){
             tab[i].tmp_var = -cont++;
+            btab[0].vd ++;
         }
         else if(tab[i].kind==ARRAY){
             tab[i].refb *= -1;

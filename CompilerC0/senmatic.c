@@ -870,7 +870,7 @@ void scanf_statement(){
 
 void printf_statement(){
     //int err_recs = errs;
-    int strflag = 0;
+    int strno = -1,strflag = 0;
     symbol=nextsym();
     if(symbol!=LPARSY){
         error(STX_ERR,LPERR);
@@ -879,8 +879,8 @@ void printf_statement(){
     }
     symbol=nextsym();
     if(symbol==STRVALSY){
+        strno = strlp;
         strflag = 1;
-        emit1(SYS_PRINTSTR,strlp,F_STR);
         strcpy(stringlist[strlp++],strsy_value);
         //print string
         symbol=nextsym();
@@ -898,11 +898,18 @@ void printf_statement(){
 
         }
     }
-    if(strflag==0||strflag==2){
+    if(strflag==1){
+        emit1(SYS_PRINTSTR,strno,F_STR);
+        emit1(SYS_PRINTSTR,-1,F_STR);
+    }
+    else{
         int *value = expression();
         if(skipblk_flag||skipline_flag){
             skipline_flag = 0;
             return;
+        }
+        if(strflag==2){
+            emit1(SYS_PRINTSTR,strno,F_STR);
         }
         if(value!=NULL){
             if(exp_type==1){
@@ -917,6 +924,7 @@ void printf_statement(){
             else
                 emit1(SYS_PRINTINT,GLV,F_VAR);
         }
+        emit1(SYS_PRINTSTR,-1,F_STR);
     }
     if(symbol!=RPARSY){
         error(STX_ERR,RPERR);

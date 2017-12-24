@@ -264,7 +264,6 @@ void mips_gene(){
                 }
                 fprintf(fp_code,"li $v0,%d\n",1);
                 fprintf(fp_code,"syscall\n");
-                print_newline();
                 break;
             }
             case SYS_PRINTCH:{
@@ -277,14 +276,15 @@ void mips_gene(){
                 }
                 fprintf(fp_code,"li $v0,%d\n",11);
                 fprintf(fp_code,"syscall\n");
-                print_newline();
                 break;
             }
             case SYS_PRINTSTR:{
-                fprintf(fp_code,"la $a0,str%d\n",code4[i].x);
-                fprintf(fp_code,"li $v0,%d\n",4);
-                fprintf(fp_code,"syscall\n");
-                print_newline();
+                if(code4[i].x==-1) print_newline();
+                else{
+                    fprintf(fp_code,"la $a0,str%d\n",code4[i].x);
+                    fprintf(fp_code,"li $v0,%d\n",4);
+                    fprintf(fp_code,"syscall\n");
+                }
                 break;
             }
             case SYS_READCH:{
@@ -404,7 +404,7 @@ void mips_data_seg(){
     init_global_memory();
 }
 void init_global_memory(){
-    int i,mem=1;
+    int i,mem=0;
     mem += btab[0].vd-1;
     for(i = 1;i < btab[0].ap; i++){
         mem += btab[0].arrays[i].len;

@@ -20,24 +20,24 @@
 	"lex.h"
 	"err.h"
 
-1513526410 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
+1513868663 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"compile.h"
 
-1513645417 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
+1514047491 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
 	<stdio.h>
 	"err.h"
 	"memory.h"
 	"table.h"
 
-1513835622 c:\users\yyx\documents\github\compiler\compilerc0\memory.h
+1514046426 c:\users\yyx\documents\github\compiler\compilerc0\memory.h
 
-1513834878 c:\users\yyx\documents\github\compiler\compilerc0\table.h
+1513868663 c:\users\yyx\documents\github\compiler\compilerc0\table.h
 
-1513860689 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
+1514049398 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -46,14 +46,14 @@
 	"table.h"
 	"memory.h"
 
-1512837301 source:c:\users\yyx\documents\github\compiler\compilerc0\table.c
+1514098182 source:c:\users\yyx\documents\github\compiler\compilerc0\table.c
 	<stdio.h>
 	<string.h>
 	"err.h"
 	"table.h"
 	"lex.h"
 
-1513786706 source:c:\users\yyx\documents\github\compiler\compilerc0\generate.c
+1514098197 source:c:\users\yyx\documents\github\compiler\compilerc0\generate.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
