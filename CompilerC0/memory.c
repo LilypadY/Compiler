@@ -7,6 +7,8 @@ int c4p = 1;//0 for j main
 int tmp_var_cont = 0;
 int label_cont = 0;
 int labels[LBMAX];
+int opt_labels[LBMAX];
+int opt_label_cont = 0;
 int strlp = 0;
 
 
@@ -84,7 +86,7 @@ void printcodex(int x,int flag_x){
         }
         else if(flag_x==F_VAR){
             if(x>0)
-                fprintf(fw,"t%d\t",x);
+                fprintf(fw,"v%d\t",x);
             else if(x==0)
                 fprintf(fw,"GLV\t");
             else
@@ -105,6 +107,9 @@ void printcodex(int x,int flag_x){
         else if(flag_x==F_ARR){
             if(x>0) fprintf(fw,"A%d\t",x);
             else fprintf(fw,"GA%d\t",-x);
+        }
+        else if(flag_x==F_TMPV){
+            fprintf(fw,"t%d\t",x);
         }
 }
 char* code2str(int ord){
@@ -142,7 +147,7 @@ void output_code4(){
     fprintf(fw,"--------------\n\ncodes:\n");
     if(errs) return;
     for(i = 0;i < c4p;i ++){
-        while(labels[j]==i){
+        while(j<label_cont&&labels[j]==i){
             fprintf(fw,"label%d:",j++);
         }
         if(tab[btab[k].head].addr==i){
@@ -167,15 +172,37 @@ int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z){
 
 }
 void output_opt_code4(){
-    int i;
+    int i,j = 0;
+    if(errs) return;
     fprintf(fw,"----------------\n\n");
     for(i = 0;i < optp;i ++){
+        if(j<opt_label_cont&&opt_labels[j]==i){
+            fprintf(fw,"label%d:",j++);
+        }
         fprintf(fw,"%s ",code2str(opt_code[i].f));
         printcodex(opt_code[i].x,opt_code[i].flag_x);
         printcodex(opt_code[i].y,opt_code[i].flag_y);
         printcodex(opt_code[i].z,opt_code[i].flag_z);
-        fprintf(fw,"\n\n------------\n");
+        fprintf(fw,"\n");
+    }
+    fprintf(fw,"----------------\n\n");
+}
+void fill_label(int line){
+    int i,flag = 0;
+    for(i = 0;i < label_cont;i ++){
+        while(labels[i]==line){
+            opt_labels[opt_label_cont++] = optp;
+            flag = 1;
+        }
+        if(flag)
+            return;
     }
 }
-
-
+void opt_emitjmain(){
+    if(errs>0) return;
+    int callmain = label_cont-1;
+    opt_code[0].f = J;
+    opt_code[0].flag_z = F_LBL;
+    opt_code[0].z = callmain;
+    opt_emit(CALL,bp,0,0,F_FUNC,0,0);
+}

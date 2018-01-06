@@ -57,6 +57,8 @@ extern int strlp ;
 extern int tmp_var_cont;
 extern int label_cont;
 extern int labels[LBMAX];
+extern int opt_label_cont;
+extern int opt_labels[LBMAX];
 
 extern int func_idx;
 
@@ -75,13 +77,13 @@ int emit0(int f);
 void emitjmain();
 
 struct order4 opt_code[CMAX];
-int optp;
+int optp = 1;
 
 void output_code4();
-
 int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z);
+void opt_emitjmain();
 void output_opt_code4();
-
+void fill_label(int line);
 
 
 #endif // MEMORY_H_INCLUDED

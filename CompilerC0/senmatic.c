@@ -23,8 +23,6 @@ void return_statement();
 int* factor();
 void func_call();
 
-void init_loop();
-
 int ret_state_type = 0;
 int exp_type = 0;//0 for int,1 for char
 

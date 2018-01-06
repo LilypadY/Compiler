@@ -38,9 +38,9 @@ int main()
 	pt = 0;
 	program();
 	free(buf);
-	fclose(fw);
+	//fclose(fw);
 	mips_gene();
     dismLocExp();
-    //fclose(fw);
+    fclose(fw);
     return 0;
 }

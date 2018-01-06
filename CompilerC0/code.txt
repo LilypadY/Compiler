@@ -1,7 +1,5 @@
 .data
 strnl:.asciiz "\n"
-str0:.asciiz "rightnumber = "
-str1:.asciiz "switchcodintion clause  error!"
 global_start:.word 0
 .text
 la $sp,global_start
@@ -9,61 +7,63 @@ move $fp,$sp
 move $gp,$sp
 addi $sp,$sp,0
 j label1
-switchcodintion:
+main:
 li $10,1
-sw $10,-32($sp)
-lw $10,-32($sp)
-sw $10,-28($sp)
-lw $10,-28($sp)
-sw $10,-24($sp)
-lw $10,-24($sp)
-move $8,$10
-li $9,0
-beq $8,$9,label0
-la $a0,str0
-li $v0,4
-syscall
-la $a0,strnl
-li $v0,4
-syscall
-lw $10,-32($sp)
-sw $10,-20($sp)
-lw $10,-20($sp)
-sw $10,-16($sp)
-lw $10,-16($sp)
+sw $10,4($fp)
+lw $10,4($fp)
+sw $10,8($fp)
+lw $10,8($fp)
+sw $10,12($fp)
+lw $8,12($fp)
+addi $10,$8,1
+sw $10,12($fp)
+lw $10,12($fp)
+sw $10,16($fp)
+lw $10,4($fp)
+sw $10,20($fp)
+lw $10,20($fp)
+sw $10,24($fp)
+lw $8,24($fp)
+addi $10,$8,1
+sw $10,24($fp)
+lw $10,24($fp)
+sw $10,28($fp)
+lw $10,16($fp)
+sw $10,32($fp)
+lw $8,32($fp)
+div $10,$10,2
+sw $10,32($fp)
+lw $10,32($fp)
+sw $10,36($fp)
+lw $10,36($fp)
+sw $10,40($fp)
+lw $10,4($fp)
+sw $10,44($fp)
+lw $10,44($fp)
+sw $10,48($fp)
+lw $10,48($fp)
 move $4,$10
 li $v0,1
 syscall
 la $a0,strnl
 li $v0,4
 syscall
-lw $10,-12($sp)
-sw $10,-8($sp)
-lw $10,-8($sp)
-sw $10,-4($sp)
-lw $10,-4($sp)
-move $sp,$fp
-jr $ra
+lw $10,40($fp)
+sw $10,52($fp)
+lw $10,52($fp)
+sw $10,56($fp)
+lw $10,56($fp)
+sw $10,60($fp)
+lw $8,60($fp)
+li $9,0
+ble $8,$9,label0
+li $10,2
+sw $10,4($fp)
 label0:
-la $a0,str1
-li $v0,4
-syscall
-la $a0,strnl
-li $v0,4
-syscall
-move $sp,$fp
-jr $ra
-main:
-sw $ra,0($fp)
-move $fp,$sp
-addi $sp,$sp,36
-jal switchcodintion
-subi $fp,$fp,4
-lw $ra,0($fp)
 move $sp,$fp
 jr $ra
 label1:
 move $fp,$sp
-addi $sp,$sp,4
+addi $sp,$sp,64
 jal main
 subi $fp,$fp,-4
