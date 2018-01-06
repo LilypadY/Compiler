@@ -40,6 +40,7 @@
 #define F_FUNC  5
 #define F_STR   6
 #define F_ARR   7
+#define F_TMPV  8
 
 struct order4{
     int f;
@@ -73,8 +74,14 @@ int emit2(int f,int x,int z,int flag_x,int flag_z);
 int emit0(int f);
 void emitjmain();
 
+struct order4 opt_code[CMAX];
+int optp;
+
 void output_code4();
 
-extern struct loopblk* head;
+int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z);
+void output_opt_code4();
+
+
 
 #endif // MEMORY_H_INCLUDED

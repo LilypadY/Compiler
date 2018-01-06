@@ -1,6 +1,6 @@
 #ifndef TABLE_H_INCLUDED
 #define TABLE_H_INCLUDED
-
+#include"compile.h"
 /*kind */
 #define KIND_ST (0)
 #define CONST (KIND_ST+0)
@@ -40,7 +40,7 @@ struct block_table{
     int vd;//last var in tmp_var in stack,start from 1
     struct arr_info arrays[AMAX];
     int ap;
-    int c_end;
+    int code_st,code_en;
 };
 
 struct symbol_table tab[TMAX];

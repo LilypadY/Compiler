@@ -62,7 +62,8 @@ void const_decl(){
             skip(IDSY);
             type=INTSY;
             if(symbol!=IDSY) {
-                    symbol = nextsym();
+                    skipline();
+                    skipline_flag = 0;
                     continue;
             }
         }
@@ -71,7 +72,8 @@ void const_decl(){
             error(STX_ERR,IDSYERR);//invalid identifier
             skip(IDSY);
             if(symbol!=IDSY) {
-                    symbol = nextsym();
+                    skipline();
+                    skipline_flag = 0;
                     continue;
             }
         }
@@ -136,6 +138,7 @@ void const_decl(){
         }
         if(symbol!=SMCLSY){
             error(STX_ERR,SMCLERR);
+            skip(SMCLSY);
         }
         else{
            symbol = nextsym();
@@ -153,14 +156,16 @@ void var_oneline(int type,char headname[]){
         symbol = nextsym();
         if(symbol!=INTVALSY){
             error(STX_ERR,ARRLENERR);//array index error
-            skip(RBRKSY);
+            skipline();
+            skipline_flag = 0;
             return;
         }
         else array_len = intsy_value;
         symbol = nextsym();
         if(symbol!=RBRKSY){
             error(STX_ERR,RBKERR);//] not found
-            skip(0);
+            skipline();
+            skipline_flag = 0;
             return;
         }
         symbol = nextsym();
@@ -191,7 +196,7 @@ void var_oneline(int type,char headname[]){
             symbol = nextsym();
             if(symbol!=RBRKSY){
                 error(STX_ERR,RBKERR);//] not found
-                skip(COMMASY);
+                skip2(COMMASY);
                 continue;
             }
             symbol = nextsym();
@@ -211,6 +216,9 @@ int var_decl(int headtype,char headname[]){//only store 1st name in line
     while(symbol){
         if(symbol!=SMCLSY){
             error(STX_ERR,SMCLERR);
+            skip(SMCLSY);
+            if(symbol!=SMCLSY)
+                return 0;
         }
         symbol = nextsym();
         if(symbol==IFSY||symbol==DOSY||symbol==LBRCSY||symbol==SWITCHSY||symbol==IDSY||symbol==SCANFSY||symbol==PRINTFSY||symbol==RETURNSY||symbol==SMCLSY||symbol==RBRCSY){
@@ -228,6 +236,10 @@ int var_decl(int headtype,char headname[]){//only store 1st name in line
             error(STX_ERR,TYPESYERR);//type symbol not found
             skip(IDSY);
             type = INTSY;
+            if(symbol!=IDSY){
+                skip(SMCLSY);
+                continue;
+            }
         }
         else {
                 type = symbol;
@@ -236,6 +248,10 @@ int var_decl(int headtype,char headname[]){//only store 1st name in line
         if(symbol!=IDSY){
             error(STX_ERR,IDSYERR);//name not found
             skip(IDSY);
+            if(symbol!=IDSY){
+                skip(SMCLSY);
+                continue;
+            }
         }
         if(symbol==IDSY) strcpy(name,idsy_value);
         symbol = nextsym();
@@ -249,8 +265,12 @@ int var_decl(int headtype,char headname[]){//only store 1st name in line
         }
         if(symbol==COMMASY||symbol==SMCLSY||symbol==LBRKSY)
             var_oneline(type,name);
-        else
+        else{
             error(STX_ERR,INVALID);
+            skipline();
+            skipline_flag = 0;
+            return 0;
+        }
     }
     return 0;
 }
@@ -261,7 +281,10 @@ void param_list(){
         if(symbol!=INTSY&&symbol!=CHARSY) {
                 error(STX_ERR,TYPEERR);
                 type=INTSY;
-                skip(IDSY);
+                if(!skip(IDSY)){
+                    skipline_flag = 1;
+                    return;
+                }
         }
         else {
                 type = symbol;
@@ -269,7 +292,10 @@ void param_list(){
         }
         if(symbol!=IDSY){
             error(STX_ERR,IDSYERR);
-            skip(COMMASY);
+            if(!skip(RPARSY)){
+                skipline_flag = 1;
+                return;
+            }
         }
         else {
             table_insert(idsy_value,type,PARAM,0,0);
@@ -280,7 +306,10 @@ void param_list(){
             if(symbol!=INTSY&&symbol!=CHARSY){
                 error(STX_ERR,TYPEERR);
                 type=INTSY;
-                skip(IDSY);
+                if(!skip(IDSY)){
+                    skipline_flag = 1;
+                    return;
+                }
             }
             else {
                 type = symbol;
@@ -288,15 +317,24 @@ void param_list(){
             }
             if(symbol!=IDSY){
                 error(STX_ERR,IDSYERR);
-                skip(COMMASY);
-                continue;
+                if(!skip(RPARSY)){
+                    skipline_flag = 1;
+                    return;
+                }
+                else{
+                    break;
+                }
             }
             else table_insert(idsy_value,type,PARAM,0,0);
             symbol = nextsym();
         }
     }
-    if(symbol!=RPARSY) error(STX_ERR,RPERR);
-    symbol = nextsym();
+    if(symbol!=RPARSY) {
+            error(STX_ERR,RPERR);
+            skip(RPARSY);
+    }
+    else
+        symbol = nextsym();
     if(debug) fprintf(fw,"This is a param_list\n");
 }
 int* factor(){
@@ -326,8 +364,10 @@ int* factor(){
         }
         if(symbol!=RPARSY){
             error(STX_ERR,RPERR);
+            skip(RPARSY);
         }
-        symbol = nextsym();
+        else
+            symbol = nextsym();
     }
 
     else if(symbol==IDSY){
@@ -362,6 +402,9 @@ int* factor(){
             symbol = nextsym();
             int cur_exptype = exp_type;
             int* idxvalue = expression();
+            if(skipblk_flag||skipline_flag){
+                return NULL;
+            }
             if(exp_type==1){
                 error(SMT_ERR,TYPEMISMATCH);
                 skipline();
@@ -371,6 +414,7 @@ int* factor(){
             exp_type = cur_exptype;
             if(symbol!=RBRKSY){
                 error(STX_ERR,RBKERR);
+                skip(RBRKSY);
             }
             int arridx = tab[tabidx].refb;
             if(idxvalue!=NULL){
@@ -435,15 +479,15 @@ int* item(){
     //order
     int res = -1;
     factor_value = factor();
+    if(skipblk_flag||skipline_flag){
+        return NULL;
+    }
     if(factor_value!=NULL){
         value = factor_value;
     }
     else{
         res  = apply_t();
         emit2(MOVE,GLV,res, F_VAR,F_VAR);
-    }
-    if(skipblk_flag||skipline_flag){
-        return NULL;
     }
     while(symbol==MULSY||symbol==DIVSY){
         if(exp_type==1) exp_type = 0;
@@ -591,6 +635,7 @@ void func_call(int tabidx){
     }
     if(symbol!=RPARSY){
         error(STX_ERR,RPERR);
+        skip(RPARSY);
     }
     symbol = nextsym();
     for(k = 0;k < ps;k ++){
@@ -679,19 +724,28 @@ void if_statement(){
     symbol=nextsym();
     if(symbol!=LPARSY){
         error(STX_ERR,LPERR);
+        skipline();
+        skipline_flag = 0;
+        return;
     }
     symbol=nextsym();
     condition(0);
     int cd_cp = c4p-1;
-    if(skipblk_flag||skipline_flag){
-        skipline_flag = 0;
+    if(skipblk_flag){
         return;
     }
-    if(symbol!=RPARSY){
-        error(STX_ERR,RPERR);
+    if(skipline_flag){
+        skipline_flag = 0;
     }
-    symbol=nextsym();
-    statement();
+    else if(symbol!=RPARSY){
+        error(STX_ERR,RPERR);
+        skip(RPARSY);
+        symbol=nextsym();
+    }
+    else
+        symbol=nextsym();
+    if(symbol==IFSY||symbol==DOSY||symbol==LBRCSY||symbol==SWITCHSY||symbol==IDSY||symbol==SCANFSY||symbol==PRINTFSY||symbol==RETURNSY||symbol==SMCLSY||symbol==RBRCSY)
+        statement();
     if(skipblk_flag||skipline_flag){
         return;
     }
@@ -704,9 +758,13 @@ void switch_statement(){
     symbol=nextsym();
     if(symbol!=LPARSY){
         error(STX_ERR,LPERR);
+        skip(LPARSY);
     }
     symbol=nextsym();
     int *value = expression();
+    if(skipblk_flag||skipline_flag){
+        return ;
+    }
     int etype = exp_type;
     int sw_val,sw_flag;
     int label,lastc4p = -1;
@@ -728,15 +786,27 @@ void switch_statement(){
 
     if(symbol!=RPARSY){
         error(STX_ERR,RPERR);
+        skip(LBRCSY);
+        if(symbol!=LBRCSY){
+            symbol=nextsym();
+            return;
+        }
     }
-    symbol=nextsym();
+    symbol = nextsym();
+
     if(symbol!=LBRCSY){
         error(STX_ERR,LBRCERR);
+        skip(CASESY);
     }
-    symbol=nextsym();
+    else
+        symbol=nextsym();
     while(symbol&&symbol!=RBRCSY){
         if(symbol!=CASESY){
             error(STX_ERR,CASEERR);
+            skippart(CASESY);
+            if(symbol!=CASESY){
+                return;
+            }
         }
         if(cs_cont){
             label = apply_label();
@@ -811,6 +881,7 @@ void switch_statement(){
     }
     if(symbol!=RBRCSY){
         error(STX_ERR,RBRCERR);
+        skip(0);
     }
     symbol=nextsym();
     if(debug) fprintf(fw,"This is a switch statement\n");
@@ -970,6 +1041,10 @@ void return_statement(){
         symbol=nextsym();//;
     }
     else{
+        if(func_type!=TP_NO){
+            error(SMT_ERR,INVALIDRET);
+            skip2(SMCLSY);
+        }
         emit0(RET0);
     }
     if(symbol!=SMCLSY){
@@ -1031,7 +1106,6 @@ void assign_statement(char name[]){
                 error(STX_ERR,ASNERR);
             }
         }
-
     }
     else{
         if(tab[tabidx].kind!=VAR&&tab[tabidx].kind!=PARAM){
@@ -1060,12 +1134,12 @@ void assign_statement(char name[]){
         }
     }
     else{
-        if(tab[tabidx].type==TP_CHAR&&exp_type!=1){
+        /*if(tab[tabidx].type==TP_CHAR&&exp_type!=1){
             error(SMT_ERR,TYPEMISMATCH);
             skipline();
             skipline_flag = 0;
             return;
-        }
+        }*/
         valv = GLV;
         valfv = F_VAR;
     }
@@ -1091,8 +1165,10 @@ void assign_statement(char name[]){
     }
     if(symbol!=SMCLSY){
         error(STX_ERR,SMCLERR);
+        skip(SMCLSY);
     }
-    symbol=nextsym();
+    if(symbol==SMCLSY)
+        symbol=nextsym();
     if(debug) fprintf(fw,"This is an assign statement\n");
 }
 void while_statement(){
@@ -1108,6 +1184,7 @@ void while_statement(){
     }
     if(symbol!=WHILESY){
         error(STX_ERR,WHILEERR);
+        skipblk();
     }
     symbol=nextsym();
     if(symbol!=LPARSY) error(STX_ERR,LPERR);//int err_recs
@@ -1139,6 +1216,9 @@ void statement(){
             case LBRCSY:
                 symbol=nextsym();
                 statements();
+                if(skipblk_flag){
+                    return;
+                }
                 if(symbol!=RBRCSY)
                     error(STX_ERR,RBRCERR);
                 symbol=nextsym();
@@ -1151,19 +1231,28 @@ void statement(){
                         if(tabidx<0){
                             error(SMT_ERR,UNDEFINE);
                             skipblk();
+                            return;
                         }
                         else if(tab[tabidx].kind!=FUNC){
                             error(SMT_ERR,NOTFUNC);
                             skipblk();
+                            return;
                         }
-                        else func_call(tabidx);
+                        else {
+                                func_call(tabidx);
+                                if(skipblk_flag||skipline_flag){
+                                    return ;
+                                }
+                        }
                         if(symbol!=SMCLSY){
                             error(STX_ERR,SMCLERR);
+                            skip(SMCLSY);
                         }
-                        symbol=nextsym();
+                        else symbol=nextsym();
                         break;
                 }
-                else if(symbol==ASNSY||symbol==LBRKSY) {assign_statement(name);break;}
+                else if(symbol==ASNSY||symbol==LBRKSY) {
+                        assign_statement(name);break;}
                 else{ error(STX_ERR,INVALID);skipline();skipline_flag=0;break;}
             }
             default:error(STX_ERR,INVALID);skipline();skipline_flag=0;break;
@@ -1172,13 +1261,11 @@ void statement(){
 }
 void statements(){
     //int err_recs = errs;
-    int sc = 0;
     while(symbol&&symbol!=RBRCSY){
         statement();
         if(skipblk_flag){
             return;
         }
-        sc ++;
     }
     if(debug) fprintf(fw,"This is statements\n");
     //symbol = nextsym();
@@ -1194,15 +1281,23 @@ void compound_statement(){
     if(symbol==INTSY||symbol==CHARSY){
         type = symbol;
         symbol = nextsym();
-        strcpy(name,idsy_value);
-        symbol = nextsym();
-        int var_nxt = var_decl(type,name);
-        if(var_nxt==INTSY||var_nxt==CHARSY||var_nxt==VOIDSY){
-            error(STX_ERR,FCTINSTM);
-            skipblk();
-            skipblk_flag = 0;
-            return;
+        if(symbol!=IDSY){
+            error(STX_ERR,IDSYERR);
+            skipline();
+            skipline_flag = 0;
         }
+        else{
+            strcpy(name,idsy_value);
+            symbol = nextsym();
+            int var_nxt = var_decl(type,name);
+            if(var_nxt==INTSY||var_nxt==CHARSY||var_nxt==VOIDSY){
+                error(STX_ERR,FCTINSTM);
+                skipblk();
+                skipblk_flag = 0;
+                return;
+            }
+        }
+
     }
     statements();
     if(skipblk_flag){
@@ -1218,9 +1313,13 @@ void func(int func_type,char name[]){
     tmp_var_cont = 1;
     ret_state_type = 0;
     param_list();
-    if(symbol!=LBRCSY) error(STX_ERR,LBRCERR);
+    if(skipline_flag){
+        skipblk_flag = 0;
+    }
+    else if(symbol!=LBRCSY) error(STX_ERR,LBRCERR);
     symbol = nextsym();
     tab[btab[bp].head].addr = c4p;
+    btab[bp].code_st = c4p;
     compound_statement();
     if(skipblk_flag){
         skipblk_flag = 0;
@@ -1236,9 +1335,9 @@ void func(int func_type,char name[]){
     if(symbol!=RBRCSY) error(STX_ERR,RBRCERR);
     symbol = nextsym();
     btab[bp].vd = tmp_var_cont;
-    output_table();
+    btab[bp].code_en = c4p;
+    if(debug) output_table();
     popblk();
-
     if(debug) fprintf(fw,"This is a function\n");
 }
 void func_main(){
@@ -1252,6 +1351,7 @@ void func_main(){
     if(symbol!=LBRCSY) error(STX_ERR,LBRCERR);
     symbol = nextsym();
     tab[btab[bp].head].addr = c4p;
+    btab[bp].code_st = c4p;
     compound_statement();
     if(skipblk_flag){
         skipblk_flag = 0;
@@ -1260,7 +1360,8 @@ void func_main(){
     emit0(RET0);
     if(symbol!=RBRCSY) error(STX_ERR,RBRCERR);
     btab[bp].vd = tmp_var_cont;
-    output_table();
+    btab[bp].code_en = c4p;
+    if(debug) output_table();
 
     popblk();
     if(debug) fprintf(fw,"This is a func_main\n");

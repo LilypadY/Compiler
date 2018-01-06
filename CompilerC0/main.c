@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include"compile.h"
+#include"optimize.h"
 #define MAXPATH 1000
 
 
@@ -39,5 +40,7 @@ int main()
 	free(buf);
 	fclose(fw);
 	mips_gene();
+    dismLocExp();
+    //fclose(fw);
     return 0;
 }

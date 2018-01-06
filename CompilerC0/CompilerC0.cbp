@@ -50,6 +50,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="memory.h" />
+		<Unit filename="optimize.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="optimize.h" />
 		<Unit filename="senmatic.c">
 			<Option compilerVar="CC" />
 		</Unit>

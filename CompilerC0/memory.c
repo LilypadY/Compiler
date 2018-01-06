@@ -155,5 +155,27 @@ void output_code4(){
         fprintf(fw,"\n");
     }
 }
+int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z){
+    opt_code[optp].f = f;
+    opt_code[optp].x = x;
+    opt_code[optp].flag_x = flag_x;
+    opt_code[optp].y = y;
+    opt_code[optp].flag_y = flag_y;
+    opt_code[optp].z = z;
+    opt_code[optp].flag_z = flag_z;
+    return optp++;
+
+}
+void output_opt_code4(){
+    int i;
+    fprintf(fw,"----------------\n\n");
+    for(i = 0;i < optp;i ++){
+        fprintf(fw,"%s ",code2str(opt_code[i].f));
+        printcodex(opt_code[i].x,opt_code[i].flag_x);
+        printcodex(opt_code[i].y,opt_code[i].flag_y);
+        printcodex(opt_code[i].z,opt_code[i].flag_z);
+        fprintf(fw,"\n\n------------\n");
+    }
+}
 
 

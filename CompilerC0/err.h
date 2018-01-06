@@ -60,10 +60,12 @@
 #define NOTPUSH "not push order"
 #define SURPLUSERR "surplus content"
 #define REPCASEERR "repeated case constant"
+#define INVALIDRET "invalid return statement"
 
 extern int errs;
 extern int skipblk_flag,skipline_flag;
 int skip(int target);
+void skip2(int target);
 void skipblk();
 void skipline();
 void skippart(int target);
