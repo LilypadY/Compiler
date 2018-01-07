@@ -3,6 +3,7 @@
 #include"memory.h"
 #include"table.h"
 int c4p = 1;//0 for j main
+int optp = 1;
 
 int tmp_var_cont = 0;
 int label_cont = 0;
@@ -174,6 +175,9 @@ int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z){
 void output_opt_code4(){
     int i,j = 0;
     if(errs) return;
+    if(debug){
+        printf("labelcont=%d\n",opt_label_cont);
+    }
     fprintf(fw,"----------------\n\n");
     for(i = 0;i < optp;i ++){
         if(j<opt_label_cont&&opt_labels[j]==i){
@@ -190,12 +194,10 @@ void output_opt_code4(){
 void fill_label(int line){
     int i,flag = 0;
     for(i = 0;i < label_cont;i ++){
-        while(labels[i]==line){
+        if(labels[i]==line){
             opt_labels[opt_label_cont++] = optp;
-            flag = 1;
+            break;
         }
-        if(flag)
-            return;
     }
 }
 void opt_emitjmain(){

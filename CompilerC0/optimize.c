@@ -235,7 +235,7 @@ void emitneworder(){
         if(r->left==NULL){
             for(p = list_head;p!=NULL;p = p->next){
                 if(p->node==r&&p->type!=F_VAL&&p->isinit==0){
-                    opt_emit(MOVE,p->va,0,r->leaf_node->va,p->type,0,r->leaf_node->type);
+                    opt_emit(MOVE,r->leaf_node->va,0,p->va,r->leaf_node->type,0,p->type);
                 }
             }
             continue;
@@ -294,15 +294,19 @@ int fit2(struct DAG* r){
 void dismLocExp(){
     int i,j;
     int blks;
-    opt_emit(code4[0].f,code4[0].x,code4[0].y,code4[0].z,code4[0].flag_x,code4[0].flag_y,F_LBL);
     for(i = 1;i <= bp;i ++){
         blks=getBaseBlock(i);
         for(j = 0;j < blks;j ++){
             localExpDAG(j);
-            if(debug) printf("j = %d\tcodes=%d\n",j,optp);
         }
+
     }
-    output_opt_code4();
+    //call main
     opt_emitjmain();
+    output_opt_code4();
+}
+
+struct uvd *out,*in;
+void active(){
 
 }

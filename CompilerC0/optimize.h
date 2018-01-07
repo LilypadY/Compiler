@@ -33,4 +33,11 @@ struct node_list_ele{
 };
 
 void dismLocExp();
+
+
+struct udv{
+    int var;
+    int type;
+    struct udv* next;
+}
 #endif // OPTIMIZE_H_INCLUDED

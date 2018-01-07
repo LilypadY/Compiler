@@ -77,7 +77,7 @@ int emit0(int f);
 void emitjmain();
 
 struct order4 opt_code[CMAX];
-int optp = 1;
+extern int optp;
 
 void output_code4();
 int opt_emit(int f,int x,int y,int z,int flag_x,int flag_y,int flag_z);
