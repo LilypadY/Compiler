@@ -972,7 +972,7 @@ void printf_statement(){
     }
     if(strflag==1){
         emit1(SYS_PRINTSTR,strno,F_STR);
-        emit1(SYS_PRINTSTR,-1,F_STR);
+        //emit1(SYS_PRINTSTR,-1,F_STR);
     }
     else{
         int *value = expression();
@@ -996,7 +996,7 @@ void printf_statement(){
             else
                 emit1(SYS_PRINTINT,GLV,F_VAR);
         }
-        emit1(SYS_PRINTSTR,-1,F_STR);
+        //emit1(SYS_PRINTSTR,-1,F_STR);
     }
     if(symbol!=RPARSY){
         error(STX_ERR,RPERR);

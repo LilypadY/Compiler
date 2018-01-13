@@ -37,7 +37,7 @@ struct block_table{
     int params;//counts of parameters
     int consts;
     int vars;//counts of var record
-    int vd;//last var in tmp_var in stack,start from 1
+    int vd;//last var in tmp_var in data stack,start from 1
     struct arr_info arrays[AMAX];
     int ap;
     int code_st,code_en;

@@ -3,13 +3,17 @@
 #include"memory.h"
 #define MAXBBLK 1000
 #define PMAX 100
-
+#define SUCMAX 2
+#define PRDCMAX 10
 
 struct basic_blk{
     int st,en;
+    int sucs[SUCMAX];
+    int sucpt;
+    int opt_st,opt_en;
 };
 
-struct basic_blk bblocklist[MAXBBLK];
+extern struct basic_blk bblocklist[MAXBBLK];
 
 struct DAG{
     int content;
@@ -18,7 +22,7 @@ struct DAG{
     struct DAG* parents[PMAX];
     int inqueue;
     int parpt;
-    struct node_list_ele* leaf_node;
+    struct var_node_for_DAG* varnodes,*vn_tail;
     struct DAG* next,*qnext,*qlast;
 };
 
@@ -28,8 +32,14 @@ struct node_list_ele{
     int va;
     int type;
     int isinit;
-    struct node_list_ele* next;
+    int isact;
+    struct node_list_ele* next,*last;
     struct DAG* node;
+};
+
+struct var_node_for_DAG{
+    struct node_list_ele* ele;
+    struct var_node_for_DAG* next;
 };
 
 void dismLocExp();
@@ -39,5 +49,14 @@ struct udv{
     int var;
     int type;
     struct udv* next;
-}
+};
+struct udv_{
+    struct udv* p;
+    struct udv_* next;
+};
+
+struct rename_tab{
+    int o, n;
+    struct rename_tab *next;
+};
 #endif // OPTIMIZE_H_INCLUDED

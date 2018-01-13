@@ -20,7 +20,7 @@
 	"lex.h"
 	"err.h"
 
-1515247654 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
+1515808032 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -28,7 +28,7 @@
 	"compile.h"
 	"optimize.h"
 
-1515253625 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
+1515810249 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
 	<stdio.h>
 	"err.h"
 	"memory.h"
@@ -36,10 +36,10 @@
 
 1515253625 c:\users\yyx\documents\github\compiler\compilerc0\memory.h
 
-1514384525 c:\users\yyx\documents\github\compiler\compilerc0\table.h
+1515812527 c:\users\yyx\documents\github\compiler\compilerc0\table.h
 	"compile.h"
 
-1515250680 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
+1515812052 source:c:\users\yyx\documents\github\compiler\compilerc0\senmatic.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -65,12 +65,12 @@
 	"memory.h"
 	"err.h"
 
-1515255950 source:c:\users\yyx\documents\github\compiler\compilerc0\optimize.c
+1515810123 source:c:\users\yyx\documents\github\compiler\compilerc0\optimize.c
 	<stdio.h>
 	<stdlib.h>
 	"table.h"
 	"optimize.h"
 
-1515164675 c:\users\yyx\documents\github\compiler\compilerc0\optimize.h
+1515805610 c:\users\yyx\documents\github\compiler\compilerc0\optimize.h
 	"memory.h"
 

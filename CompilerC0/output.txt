@@ -5,9 +5,9 @@ This is an item
 This is an expression 
 This is an assign statement
 This is a statement
+this is an integer
 this is a factor
 This is an item 
-this is an integer
 this is a factor
 This is an item 
 This is an expression 
@@ -22,6 +22,7 @@ This is an expression
 This is an assign statement
 This is a statement
 this is a factor
+This is an item 
 this is an integer
 this is a factor
 This is an item 
@@ -30,6 +31,9 @@ This is an assign statement
 This is a statement
 this is a factor
 This is an item 
+This is an expression 
+This is a printf statement
+This is a statement
 this is a factor
 this is an integer
 this is a factor
@@ -59,38 +63,48 @@ This is a program
 
 codes:
 	J        label0	
-main		MOVE     1	t1	
-	MOVE     t1	GLV	
-	MOVE     GLV	t2	
-	MOVE     t2	GLV	
-	MOVE     GLV	t3	
-	ADD 	 t3	1	t3	
-	MOVE     t3	GLV	
-	MOVE     GLV	t4	
-	MOVE     t1	GLV	
-	MOVE     GLV	t5	
-	MOVE     t5	GLV	
-	MOVE     GLV	t6	
-	ADD 	 t6	1	t6	
-	MOVE     t6	GLV	
-	MOVE     GLV	t7	
-	MOVE     t4	GLV	
-	MOVE     GLV	t8	
-	MUL 	 t8	2	t8	
-	MOVE     t8	GLV	
-	MOVE     GLV	t9	
-	MOVE     t9	GLV	
-	MOVE     GLV	t10	
-	MOVE     t10	GLV	
-	MOVE     GLV	t11	
-	MOVE     t11	GLV	
-	MOVE     GLV	t12	
-	MOVE     t7	GLV	
-	MOVE     GLV	t13	
-	MUL 	 t13	2	t13	
-	MOVE     t13	GLV	
-	ADD 	 t12	GLV	t12	
-	MOVE     t12	GLV	
-	MOVE     GLV	t10	
+main		MOVE     1	v1	
+	MOVE     v1	GLV	
+	MOVE     GLV	v2	
+	MOVE     v2	GLV	
+	ADD 	 GLV	2	v3	
+	MOVE     v3	GLV	
+	MOVE     GLV	v1	
+	MOVE     v1	GLV	
+	MOVE     GLV	v4	
+	MOVE     v4	GLV	
+	MOVE     GLV	v5	
+	ADD 	 v5	1	v5	
+	MOVE     v5	GLV	
+	MOVE     GLV	v6	
+	MOVE     v1	GLV	
+	MOVE     GLV	v7	
+	MOVE     v7	GLV	
+	MOVE     GLV	v8	
+	ADD 	 v8	1	v8	
+	MOVE     v8	GLV	
+	MOVE     GLV	v9	
+	MOVE     v6	GLV	
+	MOVE     GLV	v10	
+	MOVE     v10	GLV	
+	MOVE     GLV	v11	
+	MOVE     v11	GLV	
+	SYS_PRINTINT   	 GLV	
+	MOVE     v9	GLV	
+	MOVE     GLV	v12	
+	MUL 	 v12	2	v12	
+	MOVE     v12	GLV	
+	MOVE     GLV	v13	
+	MOVE     v13	GLV	
+	MOVE     GLV	v9	
 	RET0   	 
 label0:	CALL	 main:
+----------------
+
+	J        label0	
+	MOVE     4	v1	
+	SYS_PRINTINT   	 4	
+	RET0   	 
+label0:	CALL	 main:
+----------------
+

@@ -192,7 +192,7 @@ void output_opt_code4(){
     fprintf(fw,"----------------\n\n");
 }
 void fill_label(int line){
-    int i,flag = 0;
+    int i;
     for(i = 0;i < label_cont;i ++){
         if(labels[i]==line){
             opt_labels[opt_label_cont++] = optp;
@@ -202,7 +202,8 @@ void fill_label(int line){
 }
 void opt_emitjmain(){
     if(errs>0) return;
-    int callmain = label_cont-1;
+    opt_labels[opt_label_cont] = optp;
+    int callmain = opt_label_cont++;
     opt_code[0].f = J;
     opt_code[0].flag_z = F_LBL;
     opt_code[0].z = callmain;
