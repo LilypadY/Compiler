@@ -2,6 +2,13 @@
 #define MEMORY_H_INCLUDED
 #define MAXREG 22
 #define MAXTMPSTK 200
+#define MAXTREG (16-8)
+#define MAXSREG (26-20)
+#define SREGST  20
+#define PARAMREG 5
+#define MAXPARAMREG (8-5)
+#define TREGST 8
+
 #define CMAX 10000
 #define LBMAX 10000
 #define STRMAX 2000
@@ -41,6 +48,9 @@
 #define F_STR   6
 #define F_ARR   7
 #define F_TMPV  8
+
+#define MAXV 100
+#define MAX_FUNC_MEM (100)
 
 struct order4{
     int f;
@@ -85,5 +95,13 @@ void opt_emitjmain();
 void output_opt_code4();
 void fill_label(int line);
 
+extern int regs[MAXV];
+extern int conf_len;
 
+extern int tmp_regs[MAXTREG];
+extern int tmp_stack[MAXTMPSTK];
+extern int tmp_stk_pt;
+extern int tmp_reg_pt;
+
+int get_tv_reg(int tv);
 #endif // MEMORY_H_INCLUDED

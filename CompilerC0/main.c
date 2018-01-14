@@ -14,7 +14,9 @@ int main()
     printf("please input full path of file\n");
     if(!debug) scanf("%s",filename);
     FILE* fp = fopen(filename,"rb");
-    fw = fopen("output.txt","w");
+    fw = fopen("code4.txt","w");
+    fw_opt = fopen("opt_code4.txt","w");
+    fw_opt_mips = fopen("opt_code.txt","w");
     if(fp==NULL){
 		fprintf(fw,"FILE OPEN ERROR:\tFile not exist\n");
 		return 0;
@@ -42,5 +44,7 @@ int main()
 	mips_gene();
     dismLocExp();
     fclose(fw);
+    fclose(fw_opt);
+    fclose(fw_opt_mips);
     return 0;
 }

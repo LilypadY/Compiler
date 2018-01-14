@@ -7,7 +7,9 @@ long f_len;
 int lineno;
 int pt ;
 FILE* fw;
-
+FILE* fcode;
+FILE* fw_opt_mips;
+FILE* fw_opt;
 
 #define MAX_STR_LEN (1000)
 #define MAX_ID (30)

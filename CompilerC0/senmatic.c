@@ -15,7 +15,6 @@ int ischar(int c){
 int* expression();
 void statement();
 void statements();
-void assign_statement();
 void while_statement();
 void scanf_statement();
 void printf_statement();

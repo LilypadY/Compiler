@@ -5,6 +5,7 @@
 #define PMAX 100
 #define SUCMAX 2
 #define PRDCMAX 10
+#define MAXV    100
 
 struct basic_blk{
     int st,en;
@@ -59,4 +60,19 @@ struct rename_tab{
     int o, n;
     struct rename_tab *next;
 };
+
+extern int bsc_blks;
+extern struct udv_ **ins;
+extern int regocc[MAXSREG];
+
+int getGLANew(int mcount);
+int getGLAOrg(int mcount);
+void createConfGraph(int btidx);
+void dist_tmp_reg(int bbidx);
+void dist_SRegs();
+
+void opt_mips_gene(int btidx);
+void opt_mips_data_seg();
+void opt_emit_callmain();
+
 #endif // OPTIMIZE_H_INCLUDED
