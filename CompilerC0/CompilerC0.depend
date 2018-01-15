@@ -20,7 +20,7 @@
 	"lex.h"
 	"err.h"
 
-1515887584 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
+1515916468 source:c:\users\yyx\documents\github\compiler\compilerc0\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -28,7 +28,7 @@
 	"compile.h"
 	"optimize.h"
 
-1515872946 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
+1515915115 source:c:\users\yyx\documents\github\compiler\compilerc0\memory.c
 	<stdio.h>
 	"err.h"
 	"memory.h"
@@ -66,11 +66,12 @@
 	"err.h"
 	"optimize.h"
 
-1515894097 source:c:\users\yyx\documents\github\compiler\compilerc0\optimize.c
+1515919780 source:c:\users\yyx\documents\github\compiler\compilerc0\optimize.c
 	<stdio.h>
 	<stdlib.h>
 	"table.h"
 	"optimize.h"
+	"err.h"
 
 1515887642 c:\users\yyx\documents\github\compiler\compilerc0\optimize.h
 	"memory.h"

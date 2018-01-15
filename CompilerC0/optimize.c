@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"table.h"
 #include"optimize.h"
+#include"err.h"
 
 struct basic_blk bblocklist[MAXBBLK];
 int bsc_blks;
@@ -42,11 +43,11 @@ int getBaseBlock(int bidx){//return base blocks in one function
         if(blkhead==-1) blkhead=1;
         if(l<label_cont&&labels[l]==i) {
             for(j = 0;j < blkp;j ++){
-                int st = bblocklist[j].st;
+                //int st = bblocklist[j].st;
                 int en = bblocklist[j].en;
-                if(code4[st].flag_z==F_LBL&&code4[st].z==l){
+                /*if(code4[st].flag_z==F_LBL&&code4[st].z==l){
                     bblocklist[j].sucs[bblocklist[j].sucpt++] = blkp-1;
-                }
+                }*/
                 if(code4[en].flag_z==F_LBL&&code4[en].z==l){
                     bblocklist[j].sucs[bblocklist[j].sucpt++] = blkp-1;
                 }
@@ -248,6 +249,7 @@ void emitneworder(int bbidx,int btidx){
     struct node_list_ele* p;
     struct DAG *qtail=NULL;
     struct udv_* q;
+    struct var_node_for_DAG* v;
     int i;
     int x,y,fx ,fy,z,fz;
     for(r = graph_root_head;r!=NULL;r = r->next){
@@ -280,12 +282,12 @@ void emitneworder(int bbidx,int btidx){
     //if(debug) printf("act ok\n");
     //add into queue
     while(cont<DAG_node_cont){
-        for(i = 0;i < DAG_node_cont;i ++){
+        for(i = DAG_node_cont-1;i >= 0;i --){
             if(fit2(list[i])){
                 break;
             }
         }
-        if(i!=DAG_node_cont){
+        if(i!=-1){
             if(qtail!=NULL){
                 qtail->qnext = list[i];
             }
@@ -405,58 +407,65 @@ void emitneworder(int bbidx,int btidx){
     }while(cont>0);
     //output nodes
     for(r = qtail;r !=NULL;r = r->qlast){
-        if(r->left==NULL){//left=NULL=>right=NULL
-            continue;
-        }
         if(r->varnodes==NULL&&r->parpt==0)//not active final results are killed
             continue;
-        if(r->left->varnodes!=NULL){
-            p = r->left->varnodes->ele;
-            x = p->va;
-            fx = p->type;
-        }
-        else{
-            x = r->left->index;
-            fx = F_TMPV;
-        }
-        if(r->right->varnodes!=NULL){
-            p = r->right->varnodes->ele;
-            y = p->va;
-            fy = p->type;
-        }
-        else{
-            y = r->right->index;
-            fy = F_TMPV;
-        }
-        if(fx==F_VAL&&fy==F_VAL){
-            //list_tail!=NULL
-            fz = F_VAL;
-            switch(r->content){
-                case ADD:z = x+y;break;
-                case SUB:z = x-y;break;
-                case MUL:z = x*y;break;
-                case DIV:z = x/y;break;
-                default:z = 0;fz = 0;
+        if(r->left!=NULL){//left=NULL=>right=NULL
+            if(r->left->varnodes!=NULL){
+                p = r->left->varnodes->ele;
+                x = p->va;
+                fx = p->type;
             }
-            if(fz==F_VAL){
-                add_list_node(1,z,fz);
-                list_tail->node = r;
-                assignHead(list_tail);
+            else{
+                x = r->left->index;
+                fx = F_TMPV;
             }
-            continue;
+            if(r->right->varnodes!=NULL){
+                p = r->right->varnodes->ele;
+                y = p->va;
+                fy = p->type;
+            }
+            else{
+                y = r->right->index;
+                fy = F_TMPV;
+            }
+            if(fx==F_VAL&&fy==F_VAL){
+                //list_tail!=NULL
+                fz = F_VAL;
+                switch(r->content){
+                    case ADD:z = x+y;break;
+                    case SUB:z = x-y;break;
+                    case MUL:z = x*y;break;
+                    case DIV:z = x/y;break;
+                    default:z = 0;fz = 0;
+                }
+                if(fz==F_VAL){
+                    add_list_node(1,z,fz);
+                    list_tail->node = r;
+                    assignHead(list_tail);
+                }
+            }
+            else{
+                if(r->varnodes!=NULL){
+                    p = r->varnodes->ele;
+                    z = p->va;
+                    fz = p->type;
+                }
+                else{
+                    z = r->index;
+                    fz = F_TMPV;
+                }
+                opt_emit(r->content,x,y,z,fx,fy,fz);
+            }
         }
-        if(r->varnodes!=NULL){
-            p = r->varnodes->ele;
-            z = p->va;
-            fz = p->type;
+
+        if(r->varnodes){
+            struct node_list_ele* actvarhead = r->varnodes->ele;
+            for(v = r->varnodes->next;v;v=v->next){
+                opt_emit(MOVE,actvarhead->va,0,v->ele->va,actvarhead->type,0,v->ele->type);
+            }
         }
-        else{
-            z = r->index;
-            fz = F_TMPV;
-        }
-        opt_emit(r->content,x,y,z,fx,fy,fz);
     }
-    for(p = list_head;p!=NULL;p = p->next){
+    /*for(p = list_head;p!=NULL;p = p->next){
         if(p->type!=F_VAL&&p->isinit==0&&p->isact&&p->node->varnodes!=NULL){
             struct node_list_ele* actvarhead = p->node->varnodes->ele;
             if(p->type!=actvarhead->type||p->va!=actvarhead->va){
@@ -464,7 +473,7 @@ void emitneworder(int bbidx,int btidx){
             }
         }
     }
-    /*
+
     */
     struct node_list_ele *tmp ;
     p=list_head;
@@ -522,8 +531,7 @@ void localExpDAG(int bbidx,int btidx){
     emitneworder(bbidx,btidx);
     i = bblocklist[bbidx].en;
     opt_emit(code4[i].f,code4[i].x,code4[i].y,code4[i].z,code4[i].flag_x,code4[i].flag_y,code4[i].flag_z);
-    fill_label(bblocklist[bbidx].en);
-
+    //fill_label(bblocklist[bbidx].en);
 }
 
 int in_set(struct udv *usehead,struct udv *defhead,int x,int flag_x){
@@ -695,15 +703,12 @@ void active(int bidx,int pass){
         }
     }
 
-    if(debug) printf("in out init ok\n");
     do{
         last_in_len = cur_in_len;
         cur_in_len = 0;
         for(i = bsc_blks-1;i >= 0 ;i --){
             compute_out(i);
-            //if(debug) printf("out ok\n");
             compute_in(def[i],use[i] ,i);
-            //if(debug) printf("in ok\n");
             q = ins[i]->next;
             while(q){
                 cur_in_len ++;
@@ -711,7 +716,6 @@ void active(int bidx,int pass){
             }
         }
 
-    if(debug) printf("ins=%d\t%d\n",last_in_len,cur_in_len);
     }while(last_in_len!=cur_in_len);
     for(i = bsc_blks-1;i >= 0 ;i --){
         compute_out(i);
@@ -1117,6 +1121,7 @@ void dist_tmp_reg(int bbidx){
 void dismLocExp(){
     int i,j;
     int blks;
+    if(errs) return;
     opt_mips_data_seg();
     opt_emitjmain();
     for(i = 1;i <= bp;i ++){
@@ -1131,14 +1136,8 @@ void dismLocExp(){
             //if(debug) printf("st %d \ten %d\n",bblocklist[j].st,bblocklist[j].en);
             bblocklist[j].opt_en = optp-1;
         }
-        //if(debug) printf("local ok\n");
-        //renameActVar(i);
-        //if(debug) printf("rename ok\n");
-    //    opt_mips_gene(i);
-
-        //freeActMem();
-        //freeGlb();
-    if(debug){
+/*
+        if(debug){
                 struct udv_ *q;
         for(j= 0;j < bsc_blks;j ++){
                 printf("active :\ni=%d\n",j);
@@ -1157,9 +1156,18 @@ void dismLocExp(){
             printf("\n\n");
         }
         }
-        printf("%d\n",i);
+*/
+        //if(debug) printf("local ok\n");
+        renameActVar(i);
+        //if(debug) printf("rename ok\n");
+        opt_mips_gene(i);
+
+        freeActMem();
+        freeGlb();
+
+        if(debug) printf("%d\n",i);
     }
     //call main
-    //opt_emit_callmain();
+    opt_emit_callmain();
     output_opt_code4();
 }

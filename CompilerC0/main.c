@@ -40,10 +40,10 @@ int main()
 	pt = 0;
 	program();
 	free(buf);
-	//fclose(fw);
+	fclose(fw);
 	mips_gene();
     dismLocExp();
-    fclose(fw);
+    //fclose(fw);
     fclose(fw_opt);
     fclose(fw_opt_mips);
     return 0;

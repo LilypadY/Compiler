@@ -195,6 +195,7 @@ void fill_label(int line){
     int i;
     for(i = 0;i < label_cont;i ++){
         if(labels[i]==line){
+                if(debug) printf("line=%d\n",line);
             opt_labels[opt_label_cont++] = optp;
             break;
         }
